@@ -1,38 +1,219 @@
-.App {
-  text-align: center;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.app { min-height: 100vh; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.topbar {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 2rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.topbar h1 { font-size: 20px; font-weight: 600; }
+.role-switcher { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.role-switcher select { padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc; }
+
+.main { padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+.card { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid #e8e8e8; }
+.card.income { border-left: 4px solid #1d9e75; }
+.card.expense { border-left: 4px solid #d04a4a; }
+.card-label { font-size: 13px; color: #666; margin-bottom: 6px; }
+.card-amount { font-size: 24px; font-weight: 600; }
+
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+.chart-box { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid #e8e8e8; }
+.chart-box h3 { font-size: 14px; font-weight: 600; margin-bottom: 1rem; }
+
+.section { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid #e8e8e8; margin-bottom: 1.5rem; }
+.section h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; }
+
+.controls { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+.search-input { flex: 1; min-width: 180px; padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 14px; }
+.controls select, .controls button { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px; cursor: pointer; background: white; }
+
+.txn-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.txn-table th { text-align: left; padding: 8px 12px; background: #f9f9f9; font-size: 12px; color: #666; font-weight: 500; }
+.txn-table td { padding: 10px 12px; border-top: 1px solid #f0f0f0; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+.badge.income { background: #eaf3de; color: #3a6e1e; }
+.badge.expense { background: #fbeaea; color: #8b2020; }
+.green { color: #1d9e75; font-weight: 500; }
+.red { color: #d04a4a; font-weight: 500; }
+.empty { text-align: center; color: #999; padding: 2rem; font-size: 14px; }
+
+.add-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.add-form input, .add-form select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 14px; }
+.add-form button { padding: 8px 20px; background: #378add; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+
+.insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.insight-card { background: #f9f9f9; border-radius: 8px; padding: 1rem; }
+.insight-label { font-size: 12px; color: #666; margin-bottom: 6px; }
+.insight-value { font-size: 22px; font-weight: 600; color: #1a1a1a; }
+.insight-sub { font-size: 12px; color: #999; margin-top: 4px; }
+
+@media (max-width: 700px) {
+  .cards-grid, .charts-grid, .insights-grid { grid-template-columns: 1fr; }
+  .main { padding: 1rem; }
+  .topbar { padding: 1rem; }
+}
+
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cards-grid .card {
+  animation: fadeInUp 0.4s ease both;
+}
+.cards-grid .card:nth-child(1) { animation-delay: 0.0s; }
+.cards-grid .card:nth-child(2) { animation-delay: 0.1s; }
+.cards-grid .card:nth-child(3) { animation-delay: 0.2s; }
+
+.chart-box {
+  animation: fadeInUp 0.4s ease 0.3s both;
+}
+.section {
+  animation: fadeInUp 0.4s ease 0.2s both;
+}
+
+.txn-table tbody tr {
+  transition: background 0.15s ease;
+}
+.txn-table tbody tr:hover {
+  background: #f5f9ff;
+}
+
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #1d9e75;
   color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.App-link {
-  color: #61dafb;
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
 }
+.empty-state .empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.empty-state p {
+  color: #999;
+  font-size: 14px;
+}
+
+
+.add-form button {
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.add-form button:hover  { background: #2a6fb5; }
+.add-form button:active { transform: scale(0.97); }
+
+.controls button {
+  transition: background 0.15s ease;
+}
+.controls button:hover { background: #f0f0f0; }
+
+
+body.dark { background: #0f1117; color: #e8e8e8; }
+
+body.dark .topbar { background: #1a1d27; border-color: #2e3347; }
+body.dark .topbar h1 { color: #ffffff; }
+
+body.dark .card { background: #1a1d27; border-color: #2e3347; color: #e8e8e8; }
+body.dark .card-label { color: #aaa; }
+body.dark .card-amount { color: #ffffff; }
+
+body.dark .chart-box { background: #1a1d27; border-color: #2e3347; }
+body.dark .chart-box h3 { color: #e8e8e8; }
+
+body.dark .section { background: #1a1d27; border-color: #2e3347; }
+body.dark .section h3 { color: #e8e8e8; }
+
+body.dark .txn-table th { background: #12151e; color: #aaa; }
+body.dark .txn-table td { color: #e8e8e8; border-color: #2e3347; }
+body.dark .txn-table tbody tr:hover { background: #22263a; }
+
+body.dark .search-input {
+  background: #12151e;
+  border-color: #2e3347;
+  color: #e8e8e8;
+}
+body.dark .controls select,
+body.dark .controls button {
+  background: #12151e;
+  border-color: #2e3347;
+  color: #e8e8e8;
+}
+body.dark .add-form input,
+body.dark .add-form select {
+  background: #12151e;
+  border-color: #2e3347;
+  color: #e8e8e8;
+}
+
+body.dark .insight-card { background: #12151e; }
+body.dark .insight-label { color: #aaa; }
+body.dark .insight-value { color: #ffffff; }
+body.dark .insight-sub { color: #666; }
+
+body.dark .role-switcher select {
+  background: #12151e;
+  border-color: #2e3347;
+  color: #e8e8e8;
+}
+
+
+.dark-toggle {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+body.dark .dark-toggle {
+  border-color: #2e3347;
+  color: #e8e8e8;
+}
+.dark-toggle:hover { opacity: 0.8; }
+
+
+.export-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #378add;
+  border-color: #378add;
+}
+.export-btn:hover { background: #378add; color: white; }
+body.dark .export-btn { color: #69aaee; border-color: #69aaee; }
+body.dark .export-btn:hover { background: #378add; color: white; }

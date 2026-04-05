@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# 💰 Finance Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clean and interactive finance dashboard built with React.js that allows users to track and understand their financial activity.
 
-## Available Scripts
+## 🚀 How to Run
 
-In the project directory, you can run:
+1. Clone or download this project
+2. Open terminal in the project folder
+3. Install dependencies:
 
-### `npm start`
+4. Start the app:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. Open your browser at `http://localhost:3000`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✨ Features
 
-### `npm test`
+### 1. Dashboard Overview
+- Summary cards showing Total Balance, Income, and Expenses
+- Line chart showing spending trend over time
+- Pie chart showing spending breakdown by category
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Transactions Section
+- List of all transactions with name, date, amount, category, and type
+- Search transactions by name
+- Filter by type (All / Income / Expense)
+- Sort by newest or oldest first
 
-### `npm run build`
+### 3. Role Based UI
+- **Viewer** — can only see data, no editing allowed
+- **Admin** — can add new transactions using the form
+- Switch roles using the dropdown in the top bar
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. Insights Section
+- Highest spending category
+- Savings rate percentage
+- Total transaction count
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 5. Optional Enhancements
+- 🌙 Dark Mode — toggle between light and dark theme
+- 💾 Data Persistence — transactions saved in localStorage, survives page refresh
+- ⬇ Export — download transactions as CSV or JSON file
+- ✨ Animations — smooth fade-in effects on cards and sections
+- 📱 Responsive — works on mobile and desktop screens
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🗂 Project Structure
 
-### `npm run eject`
+src/
+components/
+SummaryCards.jsx      — Balance, Income, Expense cards
+Charts.jsx            — Line chart and Pie chart
+TransactionList.jsx   — Table with search, filter, sort
+Insights.jsx          — Key financial insights
+AddTransaction.jsx    — Form to add new transaction (Admin only)
+data/
+transactions.js       — Sample transaction data
+constants.js          — App-wide constants and config
+hooks/
+useFinance.js         — Custom hook for all app logic
+App.js                  — Main component
+App.css                 — All styles including dark mode
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠 Tech Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **React.js** — Frontend framework
+- **Recharts** — Charts and data visualization
+- **CSS** — Styling and responsive design
+- **localStorage** — Data persistence
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📦 State Management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+All application state is managed using React's built-in `useState` hook inside a custom hook `useFinance.js`. This keeps `App.js` clean and separates UI from logic.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+State managed:
+- `transactions` — list of all transactions
+- `role` — current user role (viewer/admin)
+- `search` — search input value
+- `filterType` — active filter selection
+- `toast` — notification visibility
