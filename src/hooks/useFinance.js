@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'; 
 import { transactions as initialData } from '../data/transactions';
-import { TOAST_DURATION } from '../data/constants';
 
 
 export function useFinance() {
